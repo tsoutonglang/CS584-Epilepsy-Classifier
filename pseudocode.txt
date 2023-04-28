@@ -1,0 +1,38 @@
+epilepsy_df = pd.read_csv('...\cs584\Epileptic Seizure Recognition.csv')
+X = epilepsy_df.iloc[:,1:179].values
+y = epilepsy_df.iloc[:,179].values
+y[y > 1] = 0
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2)
+
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+logReg = LogisticRegression(max_iter=1000)
+logReg.fit(X_train, y_train)
+
+sv = SVC()
+sv.fit(X_train, y_train)
+
+gNB = GaussianNB()
+gNB.fit(X_train, y_train)
+
+kNN = KNeighborsClassifier()
+kNN.fit(X_train, y_train)
+
+y_pred_logReg = logReg.predict(X_test)
+acc_logReg = accuracy_score(y_test, y_pred_logReg)
+fScore_logReg = f1_score(y_test, y_pred_logReg, average="binary")
+
+y_pred_sv = sv.predict(X_test)
+acc_sv = accuracy_score(y_test, y_pred_sv)
+fScore_sv = f1_score(y_test, y_pred_sv, average="binary")
+
+y_pred_gNB = gNB.predict(X_test)
+acc_gNB = accuracy_score(y_test, y_pred_gNB)
+fScore_gNB = f1_score(y_test, y_pred_gNB, average="binary")
+
+y_pred_kNN = kNN.predict(X_test)
+acc_kNN = accuracy_score(y_test, y_pred_kNN)
+fScore_kNN = f1_score(y_test, y_pred_kNN, average="binary")
+
