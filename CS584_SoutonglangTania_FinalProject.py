@@ -32,7 +32,12 @@ scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 
-# training models
+# models:
+# logistic regression
+# svm
+# naive bayes
+# k-nn
+
 print("Training...")
 logReg = LogisticRegression(max_iter=1000)
 logReg.fit(X_train, y_train)
@@ -49,7 +54,7 @@ y_pred_sv = sv.predict(X_test)
 y_pred_gNB = gNB.predict(X_test)
 y_pred_kNN = kNN.predict(X_test)
 
-
+# get results and metrics
 acc_logReg = accuracy_score(y_test, y_pred_logReg)
 fScore_logReg = f1_score(y_test, y_pred_logReg, average="binary")
 acc_sv = accuracy_score(y_test, y_pred_sv)
@@ -81,7 +86,3 @@ fpr, tpr, thresholds = roc_curve(y_test, y_pred_kNN)
 auc = round(roc_auc_score(y_test, y_pred_kNN), 5)
 plt.plot(fpr, tpr, label="k-Nearest Neighbors, AUC="+str(auc))
 plt.legend()
-
-matrix = confusion_matrix(y_test, y_pred_sv)
-matrix_display = ConfusionMatrixDisplay(confusion_matrix=matrix, display_labels = ["No Seizure", "Seizure"])
-matrix_display.plot()
